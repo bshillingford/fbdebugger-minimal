@@ -42,4 +42,9 @@ build = {
         ['fb.debugger._fb.editline._config'] = 'fb/editline/_config.lua',
         ['fb.debugger._fb.editline.completer'] = 'fb/editline/completer.lua',
     },
+    install = {
+        bin = {
+            'bin/fbdbg-run'
+        }
+    }
 }

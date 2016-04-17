@@ -1,0 +1,38 @@
+#!/usr/bin/env th
+--[[
+Executes the specified file in "debug mode": drops into `fb.debugger` when an error occurs.
+]]
+
+local scriptname = table.remove(arg, 1)
+assert(scriptname, 'script name must be specified')
+
+local debugger = require('fb.debugger')
+
+local colorize
+pcall(function()
+  local ffi = require 'ffi'
+  ffi.cdef("int isatty(int fd);")
+  if ffi.C.isatty(2) then  -- only colorize when STDERR is tty
+    colorize = require 'trepl.colorize'
+  end
+end)
+
+local load_msg = 'Executing '..scriptname..' in debug mode. '
+              .. 'fb.debugger will be entered on error.\n---\n'
+if colorize then
+  io.stderr:write(colorize.yellow(load_msg))
+else
+  io.stderr:write(load_msg)
+end
+io.stderr:flush()
+
+local function handler(msg)
+  print(debug.traceback(msg, 2))
+  debugger.enter()
+end
+debugger.add_skip_func(handler)
+
+-- unpack hack to prevent tail call optimization which makes backtraces harder to read
+return unpack({xpcall(function()
+  return unpack({dofile(scriptname)})
+end, handler)})
