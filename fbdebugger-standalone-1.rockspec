@@ -10,7 +10,8 @@
 package = 'fbdebugger'
 version = 'standalone-1'
 source = {
-    url = 'https://github.com/bshillingford/fbdebugger-minimal',
+    url = 'git://github.com/bshillingford/fbdebugger-minimal',
+    branch = 'master',
 }
 description = {
     summary = 'FB Lua Debugger',
@@ -19,7 +20,7 @@ description = {
       inspired by gdb, and it has special support for printing Torch tensors
       (but Torch is not required). Requires LuaJIT 2.0+.
     ]],
-    homepage = 'https://github.com/facebook/fblualib',
+    homepage = 'https://github.com/bshillingford/fbdebugger-minimal',
     license = 'BSD',
 }
 supported_platforms = {
@@ -27,10 +28,6 @@ supported_platforms = {
 }
 dependencies = {
     'penlight >= 1.3.1',
-}
-source = {
-    url = 'https://github.com/facebook/fblualib',
-    dir = 'fblualib/debugger',
 }
 build = {
     type = 'builtin',
