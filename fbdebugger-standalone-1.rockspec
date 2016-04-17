@@ -28,10 +28,6 @@ supported_platforms = {
 dependencies = {
     'penlight >= 1.3.1',
 }
-source = {
-    url = 'https://github.com/facebook/fblualib',
-    dir = 'fblualib/debugger',
-}
 build = {
     type = 'builtin',
     modules = {
